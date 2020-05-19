@@ -69,9 +69,18 @@ self.addEventListener("activate", function (event) {
 //   );
 // });
 
-// CACHE ONLY STRATEGY
-self.addEventListener("fetch", function (event) {
-  event.respondWith(
-    caches.match(event.request)
-  );
-});
+// CACHE ONLY STRATEGY - can be used for specific request, but no use as a single Strategy
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     caches.match(event.request)
+//   );
+// });
+
+
+// NETWORK ONLY STRATEGY - can be used for specific request, but no use as a single Strategy
+// self.addEventListener("fetch", function (event) {
+//   event.respondWith(
+//     fetch(event.request)
+//   );
+// });
+
