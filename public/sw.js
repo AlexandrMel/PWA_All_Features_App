@@ -69,6 +69,23 @@ self.addEventListener("activate", function (event) {
 //   );
 // });
 
+// NETWORK WITH CACHE FALLBACK STRATEGY
+self.addEventListener("fetch", function (event) {
+  event.respondWith(
+    fetch(event.request)
+    .then(function(res){
+      return caches.open(CACHE_DYNAMIC_NAME)
+                      .then(function(cache) {
+                        cache.put(event.request.url, res.clone());
+                        return res;
+    })
+  })
+    .catch(function (err) {
+      return caches.match(event.request);
+    })
+  );
+});
+
 // CACHE ONLY STRATEGY - can be used for specific request, but no use as a single Strategy
 // self.addEventListener("fetch", function (event) {
 //   event.respondWith(
@@ -76,11 +93,9 @@ self.addEventListener("activate", function (event) {
 //   );
 // });
 
-
 // NETWORK ONLY STRATEGY - can be used for specific request, but no use as a single Strategy
 // self.addEventListener("fetch", function (event) {
 //   event.respondWith(
 //     fetch(event.request)
 //   );
 // });
-
